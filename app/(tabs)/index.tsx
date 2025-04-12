@@ -1,19 +1,30 @@
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
+import { SafeAreaView, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { useRouter } from 'expo-router';
 
-export default function LoginScreen() {
-  const handleLogin = (type: string) => {
-    alert(`Logged in as ${type}`);
-  };
+export default function IndexScreen() {
+  const router = useRouter();
+
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>TRUSTFUND</Text>
+      <Image
+        source={require('../assets/images/Trustlogo.png')}
+        style={styles.logo}
+        resizeMode="contain"
+      />
+
       <Text style={styles.loginText}>LOGIN</Text>
 
-      <TouchableOpacity style={styles.button} onPress={() => handleLogin('Parent')}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => router.push('/parent' as any)}
+      >
         <Text style={styles.buttonText}>Parent</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button} onPress={() => handleLogin('Dependent')}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => router.push('/dependent' as any)}
+      >
         <Text style={styles.buttonText}>Dependent</Text>
       </TouchableOpacity>
     </SafeAreaView>
@@ -28,16 +39,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
   },
-  title: {
-    fontSize: 28,
-    color: '#D4AF37',
-    fontWeight: 'bold',
-    marginBottom: 20,
+  logo: {
+    width: 150,
+    height: 120,
+    marginBottom: 30,
+    resizeMode: 'contain',
   },
   loginText: {
     fontSize: 20,
     color: '#ffffff',
     marginBottom: 30,
+    fontWeight: 'bold',
   },
   button: {
     backgroundColor: '#ffffff',
@@ -49,5 +61,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#000000',
     fontSize: 16,
+    fontWeight: '500',
   },
 });
