@@ -4,6 +4,7 @@ export default function LoginScreen() {
   const handleLogin = (type: string) => {
     alert(`Logged in as ${type}`);
   };
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>TRUSTFUND</Text>

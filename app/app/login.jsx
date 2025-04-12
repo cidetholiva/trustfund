@@ -1,9 +1,10 @@
 import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
 
-export default function LoginScreen() {
-  const handleLogin = (type: string) => {
+export default function Login() {
+  const handleLogin = (type) => {
     alert(`Logged in as ${type}`);
   };
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>TRUSTFUND</Text>
