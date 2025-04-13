@@ -6,11 +6,12 @@ export const createAccount = async(form): Promise<any> => {
         first_name: form.first_name,
         last_name: form.last_name,
         state: form.state,
-        zip: form.zipcode,
+        zip: form.zip_code,
         account_number: form.account_number,
         type: form.type
     }
-    const res = await axios.post('/api/create-customer', body);
+    console.log(body)
+    const res = await axios.post('http://192.168.1.229:8000/create-customer', body);
     return res.data;
 }
 

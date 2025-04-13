@@ -1,9 +1,21 @@
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Image } from 'react-native';
-import { useRouter } from 'expo-router';
-import { useState } from 'react';
-import { createAccount } from '@/service';
-
-export default function CreateAccount() {
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  SafeAreaView,
+  Image,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+ } from 'react-native';
+ import { useRouter } from 'expo-router';
+ import { useState } from 'react';
+ import { createAccount } from '../../service';
+ 
+ 
+ export default function CreateAccount() {
   const router = useRouter();
   const [formData, setFormData] = useState({
     'first_name': '',
@@ -13,72 +25,101 @@ export default function CreateAccount() {
     'account_number': '',
     'type': 'Parent',
   });
-
+ 
   return (
     <SafeAreaView style={styles.container}>
-      <Image
-        source={require('../../assets/images/Trustlogo.png')}
-        style={styles.logo}
-        resizeMode="contain"
-      />
-      <Text style={styles.header}>Create an account</Text>
-
-      {['First Name', 'Last Name', 'State', 'Zip Code', 'Account Number'].map((label) => (
-        <View key={label}>
-          <Text style={styles.label}>{label}</Text>
-          <TextInput
-            style={styles.input}
-            placeholder={label}
-            value={formData[label]}
-            onChangeText={(text) => setFormData((prev) => ({ ...prev, [label]: text }))}
-            placeholderTextColor="#ccc"
-          />
-        </View>
-      ))}
-
-      <TouchableOpacity
-        style={styles.button}
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={60}
       >
-        <Text style={styles.buttonText}
-         onPress={() => {
-          createAccount(formData).then((account_details) =>{
-            router.push(`/add-dependent?customer_id=${account_details.customer_id}` as any)
-            console.log(account_details.customer_id)
-          })
-          }}>Continue</Text>
-      </TouchableOpacity>
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          keyboardShouldPersistTaps="handled"
+        >
+          <Image
+            source={require('../../assets/images/Trustlogo.png')}
+            style={styles.logo}
+            resizeMode="contain"
+          />
+          <Text style={styles.header}>Create an account</Text>
+ 
+          {[
+            { label: 'First Name', key: 'first_name' },
+            { label: 'Last Name', key: 'last_name' },
+            { label: 'State', key: 'state' },
+            { label: 'Zip Code', key: 'zip_code' },
+            { label: 'Account Number', key: 'account_number' },
+          ].map(({ label, key }) => (
+            <View key={key}>
+              <Text style={styles.label}>{label}</Text>
+              <TextInput
+                style={styles.input}
+                placeholder={label}
+                placeholderTextColor="#ccc"
+                value={formData[key]}
+                onChangeText={(text) =>
+                  setFormData((prev) => ({ ...prev, [key]: text }))
+                }
+              />
+            </View>
+          ))}
+
+ 
+ 
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              console.log("here")
+              createAccount(formData).then((account_details) =>{
+                router.push(`/add-dependent?customer_id=${account_details.customer_id}` as any)
+                console.log(account_details.customer_id)
+              })
+              }}
+     
+          >
+            <Text style={styles.buttonText}>Continue</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
-}
-
-const styles = StyleSheet.create({
+ }
+ 
+ 
+ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#002f1f',
+  },
+  scrollContent: {
     padding: 30,
     alignItems: 'center',
   },
   logo: {
-    width: 120,
-    height: 100,
-    marginTop: 40,
-    marginBottom: 10,
+    width: 800,
+    height: 300,
+    marginTop: -60,
+    marginBottom: 20,
   },
   header: {
     color: '#fff',
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 30,
+    marginTop: -60,
+    marginBottom: 4,
   },
   label: {
     alignSelf: 'flex-start',
     color: '#fff',
     marginBottom: 5,
     marginTop: 10,
+    fontSize: 14,
+    marginLeft: 10,
   },
   input: {
     backgroundColor: '#fff',
-    width: '100%',
+    width: 280,
     height: 45,
     borderRadius: 10,
     paddingHorizontal: 15,
@@ -86,7 +127,7 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#e3aa29',
-    width: '100%',
+    width: 280,
     paddingVertical: 14,
     borderRadius: 10,
     marginTop: 20,
@@ -97,4 +138,9 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 16,
   },
-});
+ });
+ 
+ 
+ 
+ 
+ 

@@ -4,11 +4,9 @@
 import cors from 'cors';
 import express from 'express';
 import Constants from 'expo-constants';
-
-import axios, { all } from 'axios';
+import axios from 'axios';
 
 const apiKey = Constants.expoConfig?.extra?.API_KEY;
-
 
 const app = express();
 const PORT = 8000;
@@ -31,7 +29,7 @@ app.use(express.urlencoded({extended:true}));
 
 //connect parent and dependent 
 
-function getRandomInt(): number {
+function getRandomInt() {
     let min = Math.ceil(1000);
     let max = Math.floor(1000000);
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -40,6 +38,7 @@ function getRandomInt(): number {
 
 //make a customer - parent 
 app.post('/create-customer', async (_req, res) => {
+  console.log("ok")
     const customer_details = {
       "first_name": _req.body.first_name,
       "last_name": _req.body.last_name,
@@ -83,13 +82,13 @@ app.post('/create-customer', async (_req, res) => {
 
 });
 
-app.post('api/add-dependent'), async (_req, res) => {
+app.post('/api/add-dependent'), async (_req, res) => {
   //dependent account already created, but not added independently to database
   addDependents(client, databaseAndCollection, _req.body.parent_id, _req.body.dependent_id)
 }
 
 // login logic
-app.post('/login', async (_req, res) => {
+app.post('/api/login', async (_req, res) => {
     let account_id = 0
 
     try {
@@ -122,7 +121,7 @@ app.post('/login', async (_req, res) => {
 });
 
 //sending money
-app.post('/transfer', async (_req, res) => {
+app.post('/api/transfer', async (_req, res) => {
     const currentDate = new Date();
 
     try {
