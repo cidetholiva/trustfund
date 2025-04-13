@@ -4,9 +4,8 @@ import { useState } from 'react';
 import { addDependent } from '@/service';
 import { useLocalSearchParams } from 'expo-router';
 
-const { customer_id } = useLocalSearchParams();
-
 export default function AddDependent() {
+  const { customer_id } = useLocalSearchParams();
   const router = useRouter();
   const [formData, setFormData] = useState({
     'first_name': '',
@@ -35,7 +34,7 @@ export default function AddDependent() {
             placeholder={label}
             placeholderTextColor="#ccc"
             value={formData[label]}
-            onChangeText={(text) => setFormData((prev) => ({ ...prev, [label]: text }))} // ← update value
+            onChangeText={(text) => setFormData((prev) => ({ ...prev, [label]: text }))}
           />
         </View>
       ))}

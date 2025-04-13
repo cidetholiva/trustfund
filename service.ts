@@ -1,16 +1,13 @@
-import dotenv from 'dotenv'; 
 import axios from 'axios';
 
-dotenv.config(); 
-
 export const createAccount = async(form): Promise<any> => {
+    console.log("here!!2")
     let body = {
         first_name: form.first_name,
         last_name: form.last_name,
         state: form.state,
         zip: form.zipcode,
         account_number: form.account_number,
-        parent_id: "N/A",
         type: form.type
     }
     const res = await axios.post('/api/create-customer', body);

@@ -7,10 +7,23 @@ import {
     SafeAreaView,
     Image,
   } from 'react-native';
-  import { useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
+import { useState } from 'react';
+import { addDependent } from '../../service';
+import { useLocalSearchParams } from 'expo-router';
   
   export default function AddDependent() {
-    const router = useRouter();
+  const { customer_id } = useLocalSearchParams();
+  const router = useRouter();
+  const [formData, setFormData] = useState({
+    'first_name': '',
+    'last_name': '',
+    'state': '',
+    'zip_code': '',
+    'account_number': '',
+    'parent_id': customer_id,
+    'type:': 'Dependent'
+  });
   
     return (
       <SafeAreaView style={styles.container}>
@@ -22,24 +35,23 @@ import {
   
         <Text style={styles.header}>Add Dependent</Text>
   
-        <Text style={styles.label}>First Name</Text>
-        <TextInput style={styles.input} placeholder="First Name" placeholderTextColor="#ccc" />
-  
-        <Text style={styles.label}>Last Name</Text>
-        <TextInput style={styles.input} placeholder="Last Name" placeholderTextColor="#ccc" />
-  
-        <Text style={styles.label}>State</Text>
-        <TextInput style={styles.input} placeholder="State" placeholderTextColor="#ccc" />
-  
-        <Text style={styles.label}>Zip Code</Text>
-        <TextInput style={styles.input} placeholder="Zip Code" placeholderTextColor="#ccc" />
-  
-        <Text style={styles.label}>Account Number</Text>
-        <TextInput style={styles.input} placeholder="Account Number" placeholderTextColor="#ccc" />
+        {['First Name', 'Last Name', 'State', 'Zip Code', 'Account Number'].map((label) => (
+        <View key={label}>
+          <Text style={styles.label}>{label}</Text>
+          <TextInput
+            style={styles.input}
+            placeholder={label}
+            placeholderTextColor="#ccc"
+            value={formData[label]}
+            onChangeText={(text) => setFormData((prev) => ({ ...prev, [label]: text }))}
+          />
+        </View>
+      ))}
   
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
+            addDependent(formData)
             console.log("Navigating to home...");
             router.push('/home');
           }}

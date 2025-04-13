@@ -1,4 +1,6 @@
-{
+import 'dotenv/config'; 
+
+export default {
   "expo": {
     "name": "trustfund-clean",
     "slug": "trustfund-clean",
@@ -36,6 +38,13 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      API_KEY: process.env.API_KEY,
+      MONGO_DB_USERNAME: process.env.MONGO_DB_USERNAME,
+      MONGO_DB_PASSWORD: process.env.MONGO_DB_PASSWORD,
+      MONGO_DB_NAME: process.env.MONGO_DB_NAME,
+      MONGO_COLLECTION: process.env.MONGO_COLLECTION
     }
   }
 }

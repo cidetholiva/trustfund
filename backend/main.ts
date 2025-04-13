@@ -3,11 +3,11 @@
 
 import cors from 'cors';
 import express from 'express';
-import dotenv from 'dotenv'; 
+import Constants from 'expo-constants';
+
 import axios, { all } from 'axios';
 
-dotenv.config(); 
-const apiKey = process.env.API_KEY
+const apiKey = Constants.expoConfig?.extra?.API_KEY;
 
 
 const app = express();
@@ -31,8 +31,6 @@ app.use(express.urlencoded({extended:true}));
 
 //connect parent and dependent 
 
-var customer_response;
-
 function getRandomInt(): number {
     let min = Math.ceil(1000);
     let max = Math.floor(1000000);
@@ -41,7 +39,7 @@ function getRandomInt(): number {
   
 
 //make a customer - parent 
-app.post('api/create-customer', async (_req, res) => {
+app.post('/create-customer', async (_req, res) => {
     const customer_details = {
       "first_name": _req.body.first_name,
       "last_name": _req.body.last_name,
@@ -53,34 +51,35 @@ app.post('api/create-customer', async (_req, res) => {
         "zip": _req.body.zip,
       }
     };
-  
+
     try {
-      customer_response = (await axios.post(`http://api.nessieisreal.com/customers?key=${apiKey}`, customer_details)).data;
+      let customer_response = (await axios.post(`http://api.nessieisreal.com/customers?key=${apiKey}`, customer_details)).data;
+
+       //creating account
+      var curr_id = customer_response._id
+      var account_details = {
+              "type": "Credit Card",
+              "nickname": _req.body.type,
+              "rewards": getRandomInt(),
+              "balance": getRandomInt(),
+              "account_number": _req.body.account_number
+      }
+      try {
+          const account_response = (await axios.post(`http://api.nessieisreal.com/customers/${curr_id}/accounts?key=${apiKey}`, account_details)).data;
+          if (_req.body.type == "Parent"){
+            insertAccount(client, databaseAndCollection, account_response)
+          }
+          res.send(account_response)
+
+        } catch (error) {
+          console.error('Error posting to Nessie API:', error.message);
+          res.status(500).send({ error: 'Failed to create account' });
+        }
     } catch (error) {
       console.error('Error posting to Nessie API:', error.message);
       res.status(500).send({ error: 'Failed to create customer' });
     }
 
-    //creating account
-    var _id = customer_response.body._id
-    var account_details = {
-            "type": "Credit Card",
-            "nickname": _req.body.type,
-            "rewards": getRandomInt(),
-            "balance": getRandomInt(),
-            "account_number": _req.body.account_number
-    }
-    try {
-        const account_response = (await axios.post(`http://api.nessieisreal.com/customers/${_id}/accounts?key=${apiKey}`, account_details)).data;
-        if (_req.body.type == "Parent"){
-          insertAccount(client, databaseAndCollection, account_response)
-        }
-        res.send(account_response)
-
-      } catch (error) {
-        console.error('Error posting to Nessie API:', error.message);
-        res.status(500).send({ error: 'Failed to create account' });
-      }
 
 });
 
@@ -90,7 +89,7 @@ app.post('api/add-dependent'), async (_req, res) => {
 }
 
 // login logic
-app.post('api/login', async (_req, res) => {
+app.post('/login', async (_req, res) => {
     let account_id = 0
 
     try {
@@ -123,7 +122,7 @@ app.post('api/login', async (_req, res) => {
 });
 
 //sending money
-app.post('api/transfer', async (_req, res) => {
+app.post('/transfer', async (_req, res) => {
     const currentDate = new Date();
 
     try {

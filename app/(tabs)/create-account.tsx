@@ -42,7 +42,8 @@ export default function CreateAccount() {
         <Text style={styles.buttonText}
          onPress={() => {
           createAccount(formData).then((account_details) =>{
-            router.push(`/dependent?customer_id=${account_details.customer_id}` as any)
+            router.push(`/add-dependent?customer_id=${account_details.customer_id}` as any)
+            console.log(account_details.customer_id)
           })
           }}>Continue</Text>
       </TouchableOpacity>

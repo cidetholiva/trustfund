@@ -1,8 +1,18 @@
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Image } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useState } from 'react';
+import { createAccount } from '../../service';
 
 export default function CreateAccount() {
   const router = useRouter();
+  const [formData, setFormData] = useState({
+    'first_name': '',
+    'last_name': '',
+    'state': '',
+    'zip_code': '',
+    'account_number': '',
+    'type': 'Parent',
+  });
 
   return (
     <SafeAreaView style={styles.container}>
@@ -20,13 +30,21 @@ export default function CreateAccount() {
             style={styles.input}
             placeholder={label}
             placeholderTextColor="#ccc"
+            value={formData[label]}
+            onChangeText={(text) => setFormData((prev) => ({ ...prev, [label]: text }))}
           />
         </View>
       ))}
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => router.push('/add-dependent' as any)}
+        onPress={() => {
+          console.log("here!!")
+          createAccount(formData).then((account_details) =>{
+            router.push(`/add-dependent?customer_id=${account_details.customer_id}` as any)
+            console.log(account_details.customer_id)
+          })
+          }}
       >
         <Text style={styles.buttonText}>Continue</Text>
       </TouchableOpacity>
