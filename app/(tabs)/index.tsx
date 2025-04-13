@@ -7,7 +7,7 @@ export default function IndexScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <Image
-        source={require('../assets/images/Trustlogo.png')}
+        source={require('../../assets/images/Trustlogo.png')}
         style={styles.logo}
         resizeMode="contain"
       />

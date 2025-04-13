@@ -1,10 +1,27 @@
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Image } from 'react-native';
+import { useRouter } from 'expo-router';
+import { useState } from 'react';
+import { addDependent } from '@/service';
+import { useLocalSearchParams } from 'expo-router';
+
+const { customer_id } = useLocalSearchParams();
 
 export default function AddDependent() {
+  const router = useRouter();
+  const [formData, setFormData] = useState({
+    'first_name': '',
+    'last_name': '',
+    'state': '',
+    'zip_code': '',
+    'account_number': '',
+    'parent_id': customer_id,
+    'type:': 'Dependent'
+  });
+  
   return (
     <SafeAreaView style={styles.container}>
       <Image
-        source={require('../assets/images/Trustlogo.png')}
+        source={require('../../assets/images/Trustlogo.png')}
         style={styles.logo}
         resizeMode="contain"
       />
@@ -17,12 +34,19 @@ export default function AddDependent() {
             style={styles.input}
             placeholder={label}
             placeholderTextColor="#ccc"
+            value={formData[label]}
+            onChangeText={(text) => setFormData((prev) => ({ ...prev, [label]: text }))} // ← update value
           />
         </View>
       ))}
 
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Continue</Text>
+      <TouchableOpacity 
+      style={styles.button}>
+        <Text style={styles.buttonText}
+        onPress={() => {
+                  addDependent(formData)
+                  router.push('/dependent' as any)
+                  }}>Continue</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
