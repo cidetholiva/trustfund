@@ -1,13 +1,23 @@
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Image } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useState } from 'react';
+import { createAccount } from '@/service';
 
 export default function CreateAccount() {
   const router = useRouter();
+  const [formData, setFormData] = useState({
+    'first_name': '',
+    'last_name': '',
+    'state': '',
+    'zip_code': '',
+    'account_number': '',
+    'type': 'Parent',
+  });
 
   return (
     <SafeAreaView style={styles.container}>
       <Image
-        source={require('../assets/images/Trustlogo.png')}
+        source={require('../../assets/images/Trustlogo.png')}
         style={styles.logo}
         resizeMode="contain"
       />
@@ -19,6 +29,8 @@ export default function CreateAccount() {
           <TextInput
             style={styles.input}
             placeholder={label}
+            value={formData[label]}
+            onChangeText={(text) => setFormData((prev) => ({ ...prev, [label]: text }))}
             placeholderTextColor="#ccc"
           />
         </View>
@@ -26,9 +38,13 @@ export default function CreateAccount() {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => router.push('/add-dependent' as any)}
       >
-        <Text style={styles.buttonText}>Continue</Text>
+        <Text style={styles.buttonText}
+         onPress={() => {
+          createAccount(formData).then((account_details) =>{
+            router.push(`/dependent?customer_id=${account_details.customer_id}` as any)
+          })
+          }}>Continue</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
