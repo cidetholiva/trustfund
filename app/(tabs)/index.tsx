@@ -40,9 +40,11 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   logo: {
-    width: 150,
-    height: 120,
-    marginBottom: 30,
+    width: 300,
+    height: 300,
+    marginTop: 40,
+    marginBottom: 20,
+    alignSelf: 'center',
     resizeMode: 'contain',
   },
   loginText: {

@@ -36,34 +36,37 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logo: {
-    width: 120,
-    height: 100,
-    marginTop: 40,
-    marginBottom: 10,
+    width: 800,
+    height: 300,
+    marginTop: -60,
+    marginBottom: 20,
   },
   header: {
     color: '#fff',
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 30,
+    marginTop: -60,
+    marginBottom: 4,
   },
-  label: {
+  label: { //first,last, etc.
     alignSelf: 'flex-start',
     color: '#fff',
     marginBottom: 5,
     marginTop: 10,
+    fontSize: 14,
+    marginLeft: 10,
   },
-  input: {
+  input: { //text box
     backgroundColor: '#fff',
-    width: '100%',
+    width: 280,
     height: 45,
     borderRadius: 10,
-    paddingHorizontal: 15,
+    paddingHorizontal: 90,
     marginBottom: 10,
   },
-  button: {
+  button: { //yellow button
     backgroundColor: '#e3aa29',
-    width: '100%',
+    width: 280,
     paddingVertical: 14,
     borderRadius: 10,
     marginTop: 20,

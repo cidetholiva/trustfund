@@ -61,10 +61,10 @@ import {
       alignItems: 'center',
     },
     logo: {
-      width: 150,
-      height: 120,
-      marginTop: 40,
-      marginBottom: 30,
+      width: 320,
+      height: 240,
+      marginTop: 60,
+      marginBottom: 40,
     },
     header: {
       color: '#fff',

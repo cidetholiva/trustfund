@@ -40,16 +40,18 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   logo: {
-    width: 150,
-    height: 120,
-    marginBottom: 30,
+    width: 500,
+    height: 500,
+    marginTop: -90, 
+    marginBottom: 20,
     resizeMode: 'contain',
   },
   loginText: {
     fontSize: 20,
     color: '#ffffff',
-    marginBottom: 30,
-    fontWeight: 'bold',
+    fontWeight: '900',
+    marginTop: -80,     
+    marginBottom: 20,
   },
   button: {
     backgroundColor: '#ffffff',
