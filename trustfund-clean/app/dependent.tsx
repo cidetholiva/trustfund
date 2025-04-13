@@ -9,7 +9,7 @@ import {
   } from 'react-native';
   import { useRouter } from 'expo-router';
   
-  export default function AddDependent() {
+  export default function DependentLogin() {
     const router = useRouter();
   
     return (
@@ -20,29 +20,25 @@ import {
           resizeMode="contain"
         />
   
-        <Text style={styles.header}>Add Dependent</Text>
+        <Text style={styles.header}>Dependent</Text>
   
         <Text style={styles.label}>First Name</Text>
-        <TextInput style={styles.input} placeholder="First Name" placeholderTextColor="#ccc" />
+        <TextInput
+          style={styles.input}
+          placeholder="First Name"
+          placeholderTextColor="#ccc"
+        />
   
         <Text style={styles.label}>Last Name</Text>
-        <TextInput style={styles.input} placeholder="Last Name" placeholderTextColor="#ccc" />
-  
-        <Text style={styles.label}>State</Text>
-        <TextInput style={styles.input} placeholder="State" placeholderTextColor="#ccc" />
-  
-        <Text style={styles.label}>Zip Code</Text>
-        <TextInput style={styles.input} placeholder="Zip Code" placeholderTextColor="#ccc" />
-  
-        <Text style={styles.label}>Account Number</Text>
-        <TextInput style={styles.input} placeholder="Account Number" placeholderTextColor="#ccc" />
+        <TextInput
+          style={styles.input}
+          placeholder="Last Name"
+          placeholderTextColor="#ccc"
+        />
   
         <TouchableOpacity
           style={styles.button}
-          onPress={() => {
-            console.log("Navigating to home...");
-            router.push('/home');
-          }}
+          onPress={() => router.push('/home' as any)}
         >
           <Text style={styles.buttonText}>Continue</Text>
         </TouchableOpacity>
@@ -59,27 +55,28 @@ import {
     },
     logo: {
       width: 300,
-      height: 200,
+      height: 300,
       marginTop: 20,
-      marginBottom: 10,
+      marginBottom: 20,
+      resizeMode: 'contain',
     },
     header: {
       color: '#fff',
       fontSize: 22,
       fontWeight: 'bold',
-      marginBottom: 20,
+      marginBottom: 30,
     },
     label: {
       alignSelf: 'flex-start',
       color: '#fff',
       marginBottom: 5,
-      marginTop: 15,
+      marginTop: 10,
       fontSize: 14,
       marginLeft: 10,
     },
     input: {
       backgroundColor: '#fff',
-      width: '96%',
+      width: '100%',
       height: 45,
       borderRadius: 10,
       paddingHorizontal: 15,
@@ -87,9 +84,9 @@ import {
     },
     button: {
       backgroundColor: '#e3aa29',
-      width: '90%',
+      width: '100%',
       paddingVertical: 14,
-      borderRadius: 20,
+      borderRadius: 10,
       marginTop: 20,
       alignItems: 'center',
     },

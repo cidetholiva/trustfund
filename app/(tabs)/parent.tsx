@@ -64,7 +64,7 @@ import {
       width: 320,
       height: 240,
       marginTop: 60,
-      marginBottom: 40,
+      marginBottom: 10,
     },
     header: {
       color: '#fff',
